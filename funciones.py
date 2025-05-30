@@ -15,6 +15,43 @@ from varios import Textos
 
 
 
+
+def asociar_tiles_a_imagenes(game):
+    return {
+        1: None,
+        2: game.obtener_grafico("smb-nube-2.png"),
+        3: game.obtener_grafico("smb-nube-3.png"),
+        4: game.obtener_grafico("smb-nube-4.png"),
+        5: game.obtener_grafico("smb-mastil-bola.png"),
+        6: game.obtener_grafico("smb-nube-6.png"),
+        7: game.obtener_grafico("smb-nube-7.png"),
+        8: game.obtener_grafico("smb-nube-8.png"),
+        9: game.obtener_grafico("smb-mastil-bandera2.png"),
+        10: game.obtener_grafico("smb-mastil-bandera1.png"),
+        13: game.obtener_grafico("smb-mastil-1.png"),
+        14: game.obtener_grafico("smb-interrogacion.png"),
+        15: game.obtener_grafico("smb-block-ladrillo.png"),
+        16: game.obtener_grafico("smb-block-piramide.png"),
+        17: game.obtener_grafico("smb-mastil-2.png"),
+        21: game.obtener_grafico("smb-tuberia-arriba-iz.png"),
+        22: game.obtener_grafico("smb-tuberia-arriba-de.png"),
+        27: game.obtener_grafico("smb-tuberia-abajo-iz.png"),
+        28: game.obtener_grafico("smb-tuberia-abajo-de.png"),
+        23: game.obtener_grafico("smb-castillo-ventana-de.png"),
+        24: game.obtener_grafico("smb-castillo-block-ladrillos.png"),
+        25: game.obtener_grafico("smb-castillo-ventana-iz.png"),
+        20: game.obtener_grafico("smb-castillo-20.png"),
+        29: game.obtener_grafico("smb-castillo-29.png"),
+        33: game.obtener_grafico("smb-castillo-33.png"),
+        39: game.obtener_grafico("smb-castillo-39.png"),
+        40: game.obtener_grafico("smb-suelo.png"),
+    }
+
+
+
+
+
+
 def instanciar_textos(self):
     MARGEN = 9
 

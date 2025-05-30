@@ -61,35 +61,7 @@ class Game:
         self.reloj = pygame.time.Clock()
 
         # TILES (key=numero-tile : value=archivo.png)
-        self.num_tile = {
-            1: None,
-            2: self.obtener_grafico("smb-nube-2.png"),
-            3: self.obtener_grafico("smb-nube-3.png"),
-            4: self.obtener_grafico("smb-nube-4.png"),
-            5: self.obtener_grafico("smb-mastil-bola.png"),
-            6: self.obtener_grafico("smb-nube-6.png"),
-            7: self.obtener_grafico("smb-nube-7.png"),
-            8: self.obtener_grafico("smb-nube-8.png"),
-            9: self.obtener_grafico("smb-mastil-bandera2.png"),
-            10: self.obtener_grafico("smb-mastil-bandera1.png"),
-            13: self.obtener_grafico("smb-mastil-1.png"),
-            14: self.obtener_grafico("smb-interrogacion.png"),
-            15: self.obtener_grafico("smb-block-ladrillo.png"),
-            16: self.obtener_grafico("smb-block-piramide.png"),
-            17: self.obtener_grafico("smb-mastil-2.png"),
-            21: self.obtener_grafico("smb-tuberia-arriba-iz.png"),
-            22: self.obtener_grafico("smb-tuberia-arriba-de.png"),
-            27: self.obtener_grafico("smb-tuberia-abajo-iz.png"),
-            28: self.obtener_grafico("smb-tuberia-abajo-de.png"),
-            23: self.obtener_grafico("smb-castillo-ventana-de.png"),
-            24: self.obtener_grafico("smb-castillo-block-ladrillos.png"),
-            25: self.obtener_grafico("smb-castillo-ventana-iz.png"),
-            20: self.obtener_grafico("smb-castillo-20.png"),
-            29: self.obtener_grafico("smb-castillo-29.png"),
-            33: self.obtener_grafico("smb-castillo-33.png"),
-            39: self.obtener_grafico("smb-castillo-39.png"),
-            40: self.obtener_grafico("smb-suelo.png"),
-        }
+        self.num_tile = asociar_tiles_a_imagenes(self)
 
         # INICIALIZAR/RESETEAR el scroll
         self.scroll_x = 0
