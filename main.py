@@ -63,9 +63,20 @@ class Game:
         # TILES (key=numero-tile : value=archivo.png)
         self.num_tile = {
             1: None,
+            2: self.obtener_grafico("smb-nube-2.png"),
+            3: self.obtener_grafico("smb-nube-3.png"),
+            4: self.obtener_grafico("smb-nube-4.png"),
+            5: self.obtener_grafico("smb-mastil-bola.png"),
+            6: self.obtener_grafico("smb-nube-6.png"),
+            7: self.obtener_grafico("smb-nube-7.png"),
+            8: self.obtener_grafico("smb-nube-8.png"),
+            9: self.obtener_grafico("smb-mastil-bandera2.png"),
+            10: self.obtener_grafico("smb-mastil-bandera1.png"),
+            13: self.obtener_grafico("smb-mastil-1.png"),
             14: self.obtener_grafico("smb-interrogacion.png"),
             15: self.obtener_grafico("smb-block-ladrillo.png"),
             16: self.obtener_grafico("smb-block-piramide.png"),
+            17: self.obtener_grafico("smb-mastil-2.png"),
             21: self.obtener_grafico("smb-tuberia-arriba-iz.png"),
             22: self.obtener_grafico("smb-tuberia-arriba-de.png"),
             27: self.obtener_grafico("smb-tuberia-abajo-iz.png"),
@@ -184,7 +195,7 @@ class Game:
 
                 tile = NIVEL_1_1[tile_index]
 
-                if 14 <= tile <= 16 or 20 <= tile <= 22 or 23 <= tile <= 25 or 27 <= tile <= 29 or 39 <= tile <= 40:
+                if 2 <= tile <= 10 or 13 <= tile <= 17 or 20 <= tile <= 22 or 23 <= tile <= 25 or 27 <= tile <= 29 or 39 <= tile <= 40:
                     # Calcula posición en pantalla relativa al scroll
                     pantalla_x = x * self.CO.TILE_X - (self.scroll_x % self.CO.TILE_X)
                     pantalla_y = y * self.CO.TILE_Y
