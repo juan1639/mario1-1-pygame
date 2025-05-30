@@ -13,6 +13,8 @@ from varios import Textos
         return TILE_MAP[y][x] != 0
     return False """
 
+
+
 def instanciar_textos(self):
     MARGEN = 9
 
@@ -24,6 +26,9 @@ def instanciar_textos(self):
         self.CO.TY * 2, self.COL.BLANCO, negrita=True, centrado=False, tipo="dinamico-puntos")
     self.instanciar_texto(str(self.nivel), 48, self.CO.RESOLUCION[0] - self.CO.ZONA_SCORES + MARGEN,
         self.CO.TY * 5, self.COL.BLANCO, negrita=True, centrado=False, tipo="dinamico-nivel")
+
+
+
 
 def updates_segun_estado(self):
     """Updates condicionales (presentacion/preparado/en_juego...)"""
@@ -37,6 +42,10 @@ def updates_segun_estado(self):
         self.listas_sprites["all_sprites"].update()
         self.listas_sprites["textos"].update()
 
+
+
+
+
 """ def checkNivelSuperado(self):
     if self.estado_juego["nivel_superado"]:
         return
@@ -48,6 +57,8 @@ def updates_segun_estado(self):
         self.ultimo_update["nivel_superado_delay"] = pygame.time.get_ticks()
         self.sonidos.reproducir("intermision")
         print("nivel superado!") """
+
+
 
 """ def checkDelayNextLevel(self):
     if not self.estado_juego["nivel_superado"]:
@@ -61,10 +72,18 @@ def updates_segun_estado(self):
         self.ultimo_update["preparado"] = pygame.time.get_ticks()
         self.new_game() """
 
+
+
+
+
 def draw_listas_sprites(self):
     """Renderizar las listas-sprites"""
     self.listas_sprites["all_sprites"].draw(self.pantalla)
     self.listas_sprites["textos"].draw(self.pantalla)
+
+
+
+
 
 def eventos_comenzar_quit_etc(self):
     for event in pygame.event.get():
@@ -96,6 +115,11 @@ def eventos_comenzar_quit_etc(self):
             if event.key == pygame.K_TAB:
                 for clave in self.estado_juego:
                     print(clave, self.estado_juego[clave])
+
+
+
+
+
 
 def eliminar_elemento_de_lista(self, lista, elemento):
     for sprite in self.listas_sprites[lista]:

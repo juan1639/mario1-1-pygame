@@ -15,7 +15,10 @@ class Colores:
     BG_GRIS_OSCURO = (49, 49, 50)
     ROJO = (230, 30, 20)
     VERDE_FONDO = (20, 240, 30)
-    AZUL_CELESTE_FONDO = (144, 205, 205)
+    AZUL_CELESTE_FONDO = (100, 170, 180)
+
+
+
 
 class Constantes:
     # 256 x 240 px --> 16 x 15 tiles --> 16 x 16 px (1 tile = 1 sprite)
@@ -27,26 +30,36 @@ class Constantes:
     INVULNERABLE = False
     RESOLUCION = (TILE_X * COLUMNAS, TILE_Y * FILAS) # Calculo de la pantalla 256x240px(* escala))
     RUTA_ASSETS_IMG = 'assets/img/'
+    RUTA_ASSETS_AUDIO = 'assets/audio/'
     FPS = 100
+
+
+
+
 
 class Sonidos:
     def __init__(self):
         pygame.mixer.init()
+
+        self.ruta_audio = Constantes.RUTA_ASSETS_AUDIO
         self.sonidos = self.cargar_sonidos()
+    
+
 
     def cargar_sonidos(self):
         """Cargar todos los sonidos en un diccionario."""
+
         return {
-            "bricks_fall": self.cargar_sonido("sonido/bricks.fall.mp3"),
-            "fireworks": self.cargar_sonido("sonido/fireworks.mp3"),
-            "gameover": self.cargar_sonido("sonido/gameover_mario.mp3"),
-            "salto": self.cargar_sonido("sonido/jumpbros.ogg"),
-            "musica-secundaria-tuberias": self.cargar_sonido("sonido/mario-tuberias.mp3"),
-            "musica-principal": self.cargar_sonido("sonido/musica-mario-bros.mp3"),
-            "oh_no": self.cargar_sonido("sonido/oh-no.mp3"),
-            "ough": self.cargar_sonido("sonido/ough.mp3"),
-            "moneda": self.cargar_sonido("sonido/p-ping.mp3"),
-            "wall": self.cargar_sonido("sonido/wall.wav")
+            "bricks_fall": self.cargar_sonido(f"{self.ruta_audio}bricks-fall.mp3"),
+            "fireworks": self.cargar_sonido(f"{self.ruta_audio}fireworks.mp3"),
+            "gameover": self.cargar_sonido(f"{self.ruta_audio}gameover_mario.mp3"),
+            "salto": self.cargar_sonido(f"{self.ruta_audio}jumpbros.ogg"),
+            "musica-secundaria-tuberias": self.cargar_sonido(f"{self.ruta_audio}mario-tuberias.mp3"),
+            "musica-principal": self.cargar_sonido(f"{self.ruta_audio}musica-mario-bros.mp3"),
+            "oh_no": self.cargar_sonido(f"{self.ruta_audio}oh-no.mp3"),
+            "ough": self.cargar_sonido(f"{self.ruta_audio}ough.mp3"),
+            "moneda": self.cargar_sonido(f"{self.ruta_audio}p-ping.mp3"),
+            "wall": self.cargar_sonido(f"{self.ruta_audio}wall.wav")
         }
 
     """ def cargar_sonido(self, ruta, volumen=1.0):
@@ -54,18 +67,23 @@ class Sonidos:
         sonido.set_volume(volumen)
         return sonido """
     
+
+    
     def cargar_sonido(self, ruta, volumen=1.0):
         try:
             sonido = pygame.mixer.Sound(ruta)
             sonido.set_volume(volumen)
             return sonido
+        
         except pygame.error as e:
             print(f"[ERROR] No se pudo cargar el sonido '{ruta}': {e}")
             return None
     
+
+    
     def reproducir(self, nombre, duracion=None):
         """Reproduce un sonido si está en el diccionario."""
-        if nombre in self.sonidos and nombre == "fantasmas_azules":
+        if nombre in self.sonidos and nombre == "musica-principal":
             self.sonidos[nombre].play(loops=-1)
         
         elif nombre in self.sonidos:

@@ -3,6 +3,8 @@ from settings import *
 from funciones import *
 from tilemaps import TILE_MAP
 from marioniveles import NIVEL_1_1
+import configparser
+
 
 # ====================================================================================
 #   main.py (modulo principal) ... clase principal --> class Game
@@ -12,14 +14,17 @@ class Game:
     def __init__(self):
         pygame.init()
 
+        self.config = configparser.ConfigParser()
+        self.config.read("config.ini")
+
         # Colores y constantes
         self.COL = Colores()
         self.CO = Constantes()
 
         # Marcadores: ptos, nivel, vidas...
-        self.nivel = 1
+        self.nivel = int(self.config["general"]["nivel_inicial"])
         self.puntos = 0
-        self.vidas = 3
+        self.vidas = int(self.config["general"]["vidas_iniciales"])
 
         # Listas updates (tomas de tiempo/temporizadores)
         self.ultimo_update = {
@@ -61,6 +66,17 @@ class Game:
             14: self.obtener_grafico("smb-interrogacion.png"),
             15: self.obtener_grafico("smb-block-ladrillo.png"),
             16: self.obtener_grafico("smb-block-piramide.png"),
+            21: self.obtener_grafico("smb-tuberia-arriba-iz.png"),
+            22: self.obtener_grafico("smb-tuberia-arriba-de.png"),
+            27: self.obtener_grafico("smb-tuberia-abajo-iz.png"),
+            28: self.obtener_grafico("smb-tuberia-abajo-de.png"),
+            23: self.obtener_grafico("smb-castillo-ventana-de.png"),
+            24: self.obtener_grafico("smb-castillo-block-ladrillos.png"),
+            25: self.obtener_grafico("smb-castillo-ventana-iz.png"),
+            20: self.obtener_grafico("smb-castillo-20.png"),
+            29: self.obtener_grafico("smb-castillo-29.png"),
+            33: self.obtener_grafico("smb-castillo-33.png"),
+            39: self.obtener_grafico("smb-castillo-39.png"),
             40: self.obtener_grafico("smb-suelo.png"),
         }
 
@@ -68,32 +84,56 @@ class Game:
         self.scroll_x = 0
 
         # Cargar sonidos del modulo settings
-        #self.sonidos = Sonidos()
+        self.sonidos = Sonidos()
+    
+
+    
+
+
+
+
     
     def obtener_indice(self, x, y):
         """Obtener índice en el laberinto 1D basado en coordenadas 2D."""
         return y * self.CO.COLUMNAS + x if 0 <= x < self.CO.COLUMNAS and 0 <= y < self.CO.FILAS else None
+    
+
+
     
     def crear_pantalla_nivel(self):
         """Crear el laberinto y los tiles correspondientes."""
         #self.draw_tilemap()
         self.draw_tilemap()
     
+
+
+    
     def vaciar_listas(self):
         """Vaciar todas las listas de sprites."""
         for grupo in self.listas_sprites.values():
             grupo.empty()
     
+
+
+
+    
     def resetear_estados_juego(self):
         self.estado_juego = {clave: False for clave in self.estado_juego}
+    
+
+
     
     def new_game(self):
         """Preparar un nuevo nivel o juego."""
         self.vaciar_listas()
-        self.crear_pantalla_nivel()
-        self.instanciar_objetos()
-        self.instanciar_textos_iniciales()
-        self.sonidos.reproducir("inicio_nivel")
+        #self.crear_pantalla_nivel()
+        #self.instanciar_objetos()
+        #self.instanciar_textos_iniciales()
+        self.sonidos.reproducir("musica-principal")
+    
+
+
+
     
     def obtener_grafico(self, nombrePng):
         """Devolver una imagen y un rectangulo."""
@@ -105,6 +145,11 @@ class Game:
         rect = image.get_rect()
         
         return (image, rect)
+    
+
+
+
+
     
     """ def draw_tilemap(self):
         for y, row in enumerate(TILE_MAP):
@@ -120,6 +165,12 @@ class Game:
                 if 14 <= tile <= 16 or tile == 40:
                     self.pantalla.blit(self.num_tile[tile][0], (x * self.CO.TILE_X, y * self.CO.TILE_Y)) """
     
+
+
+
+
+
+    
     def draw_tilemap(self):
         tiles_en_pantalla_x = self.pantalla.get_width() // self.CO.TILE_X
         start_tile_x = self.scroll_x // self.CO.TILE_X
@@ -133,11 +184,17 @@ class Game:
 
                 tile = NIVEL_1_1[tile_index]
 
-                if 14 <= tile <= 16 or tile == 40:
+                if 14 <= tile <= 16 or 20 <= tile <= 22 or 23 <= tile <= 25 or 27 <= tile <= 29 or 39 <= tile <= 40:
                     # Calcula posición en pantalla relativa al scroll
                     pantalla_x = x * self.CO.TILE_X - (self.scroll_x % self.CO.TILE_X)
                     pantalla_y = y * self.CO.TILE_Y
                     self.pantalla.blit(self.num_tile[tile][0], (pantalla_x, pantalla_y))
+    
+
+
+
+
+
     
     def instanciar_objetos(self):
         """Instanciar/re-instanciar Pacman, fantasmas, etc..."""
@@ -146,17 +203,39 @@ class Game:
             self.ir_gameover()
             return
     
+
+
+
+
+    
     def instanciar_mario_dies(self, x, y):
         pass
+
+
+
+
+
 
     def instanciar_textos_iniciales(self):
         """Instanciar textos marcadores, Preparado..."""
         #instanciar_textos(self)
     
+
+
+
+
+
+    
     def instanciar_texto(self, txt, size, x, y, color, fondo=None, negrita=False, centrado=True, tipo=None):
         """Instanciar un texto y agregarlo a su lista correspondiente..."""
         #newTxt = Textos(self, txt, size, x, y, color, fondo, negrita, centrado, tipo)
         #self.listas_sprites["textos"].add(newTxt)
+    
+
+
+
+
+
     
     """ def ir_gameover(self):
         print('game over')
@@ -171,6 +250,13 @@ class Game:
             self.CO.RESOLUCION[1] // 1.5, self.COL.VERDE_FONDO, fondo=self.COL.BG_GRIS_OSCURO, negrita=True, centrado=True)
 
         self.sonidos.reproducir("gameover_retro") """
+    
+
+
+
+
+
+
 
     def update(self):
         pygame.display.set_caption(str(int(self.reloj.get_fps())))
@@ -185,15 +271,30 @@ class Game:
         pygame.display.flip()
         self.reloj.tick(self.CO.FPS)
     
+
+
+
+    
     def draw(self):
         self.pantalla.fill(self.COL.AZUL_CELESTE_FONDO)
 
         self.draw_tilemap()
         #draw_listas_sprites(self)
     
+
+
+
+
+    
     def check_event(self):
         """Eventos (Quit/Comenzar...)"""
         eventos_comenzar_quit_etc(self)
+    
+
+
+
+
+
     
     def bucle_principal(self):
         """BUCLE PRINCIPAL del Juego"""

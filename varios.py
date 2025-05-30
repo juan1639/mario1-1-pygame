@@ -26,7 +26,9 @@ class Textos(pygame.sprite.Sprite):
         
         # Identificar si se trata de un texto dinámico (puntos o nivel)
         #self.render_nivel = self.texto = str(self.game.nivel)
+    
 
+    
     def update(self):
         if self.tipo == "dinamico-puntos":
             self.image = self.font.render(f'{self.game.puntos}', True, self.color, self.fondo)
