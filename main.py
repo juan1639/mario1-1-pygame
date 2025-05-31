@@ -3,7 +3,6 @@ from settings import *
 from funciones import *
 from tilemaps import TILE_MAP
 from marioniveles import NIVEL_1_1
-import configparser
 
 
 # ====================================================================================
@@ -13,18 +12,16 @@ import configparser
 class Game:
     def __init__(self):
         pygame.init()
-
-        self.config = configparser.ConfigParser()
-        self.config.read("config.ini")
-
+        
         # Colores y constantes
         self.COL = Colores()
         self.CO = Constantes()
 
         # Marcadores: ptos, nivel, vidas...
-        self.nivel = int(self.config["general"]["nivel_inicial"])
+        self.nivel = self.CO.NIVEL_INICIAL
         self.puntos = 0
-        self.vidas = int(self.config["general"]["vidas_iniciales"])
+        self.vidas = self.CO.VIDAS_INICIALES
+        print(self.CO.INVULNERABLE)
 
         # Listas updates (tomas de tiempo/temporizadores)
         self.ultimo_update = {

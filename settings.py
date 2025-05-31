@@ -1,9 +1,61 @@
 import pygame
+import os
+import configparser
+
 
 # ====================================================================================
 #	settings.py (modulo de configuraciones)
 # 
 # ------------------------------------------------------------------------------------
+class ConfigIni:
+    @staticmethod
+    def crear_ini_si_no_existe():
+        # Ruta del archivo config
+        config_file = 'config.ini'
+
+        # Configuración por defecto
+        default_config = """
+        [general]
+        titulo = Primera pantalla Mario Python
+        nivel_inicial = 1
+        vidas_iniciales = 3
+        invulnerable = false
+
+        [video]
+        fps = 60
+        escala = 3
+        tile_x = 16
+        tile_y = 16
+        filas = 15
+        columnas = 16
+        escenario_filas = 15
+        escenario_columnas = 212
+        resolucion_x = 256
+        resolucion_y = 240
+
+        [sonido]
+        volumen_musica = 0.6
+        volumen_efectos = 0.6
+
+        [rutas]
+        imagenes = assets/img/
+        audio = assets/audio/
+        """
+
+        # Si el archivo no existe, crearlo con los valores por defecto
+        if not os.path.exists(config_file):
+            with open(config_file, 'w') as f:
+                f.write(default_config.strip())
+            
+            print(f"Archivo '{config_file}' creado con configuración predeterminada.")
+        else:
+            print(f"Archivo '{config_file}' ya existe.")
+
+
+
+
+
+
 class Colores:
     AMARILLO = (220, 190, 0)
     AMARILLENTO = (250, 245, 130)
@@ -22,16 +74,26 @@ class Colores:
 
 class Constantes:
     # 256 x 240 px --> 16 x 15 tiles --> 16 x 16 px (1 tile = 1 sprite)
-    ESCALA = 3
+    ConfigIni.crear_ini_si_no_existe()
+    
+    CONFIG = configparser.ConfigParser()
+    CONFIG.read("config.ini")
+
+    ESCALA = int(CONFIG["video"]["escala"])
     TILE_X, TILE_Y = 16 * ESCALA, 16 * ESCALA   # Tamano de los Tiles (x Escala)
     FILAS, COLUMNAS = 15, 24                    # Filas x Columnas (15, 16)
     ESCENARIO_FILAS, ESCENARIO_COLUMNAS = 15, 212 # Total Pantalla (212 ancho x 15 alto)
     MARIO_INI_POS = (5, 9)
-    INVULNERABLE = False
+    NIVEL_INICIAL = int(CONFIG["general"]["nivel_inicial"])
+    VIDAS_INICIALES = int(CONFIG["general"]["vidas_iniciales"])
     RESOLUCION = (TILE_X * COLUMNAS, TILE_Y * FILAS) # Calculo de la pantalla 256x240px(* escala))
-    RUTA_ASSETS_IMG = 'assets/img/'
-    RUTA_ASSETS_AUDIO = 'assets/audio/'
-    FPS = 100
+    INVULNERABLE = CONFIG.getboolean('general', 'invulnerable')
+    RUTA_ASSETS_IMG = CONFIG['rutas']['imagenes']
+    RUTA_ASSETS_AUDIO = CONFIG['rutas']['audio']
+    FPS = int(CONFIG['video']['fps'])
+
+
+
 
 
 
