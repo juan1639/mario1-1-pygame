@@ -164,11 +164,15 @@ class Game:
 
                 tile = NIVEL_1_1[tile_index]
 
-                if 2 <= tile <= 10 or 13 <= tile <= 17 or 20 <= tile <= 22 or 23 <= tile <= 25 or 27 <= tile <= 29 or 39 <= tile <= 40:
+                if self.num_tile[tile] != None:
                     # Calcula posición en pantalla relativa al scroll
                     pantalla_x = x * self.CO.TILE_X - (self.scroll_x % self.CO.TILE_X)
                     pantalla_y = y * self.CO.TILE_Y
                     self.pantalla.blit(self.num_tile[tile][0], (pantalla_x, pantalla_y))
+    
+
+
+                
     
 
 
