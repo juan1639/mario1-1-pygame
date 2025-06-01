@@ -189,7 +189,7 @@ class Game:
             self.ir_gameover()
             return
         
-        self.mario = Mario(self, 5, 6)
+        self.mario = Mario(self, 5, 12)
         self.listas_sprites["all_sprites"].add(self.mario)
         self.listas_sprites["mario"].add(self.mario)
 

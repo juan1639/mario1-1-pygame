@@ -46,6 +46,7 @@ class Mario(pygame.sprite.Sprite):
         # Configuración adicional
         self.direccion_actual = 0
         self.velocidad = 2
+        self.flip = False
         self.ultimo_update = pygame.time.get_ticks()
         self.VEL_FRAMES_ANIMA = 90 # Velocidad de la animación
         self.ultimo_sonido = pygame.time.get_ticks()
@@ -74,8 +75,13 @@ class Mario(pygame.sprite.Sprite):
         teclas = pygame.key.get_pressed()
         if teclas[pygame.K_LEFT]:
             self.direccion_actual = -1
+            self.flip = True
+            #pygame.transform.flip(self.image, True, False)
+
         elif teclas[pygame.K_RIGHT]:
             self.direccion_actual = 1
+            self.flip = False
+
         else:
             self.direccion_actual = 0
             self.anim_index = 0
@@ -128,10 +134,6 @@ class Mario(pygame.sprite.Sprite):
             if self.anim_index >= self.rango_animacion[1]:
                 self.anim_index = self.rango_animacion[0]
             
-            x = self.rect.x
-            y = self.rect.y
             self.image = self.lista_imagenes[self.anim_index]
-            self.rect = self.image.get_rect()
-            self.rect.x = x
-            self.rect.y = y
+            self.image = pygame.transform.flip(self.image, self.flip, False)
 
