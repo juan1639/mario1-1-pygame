@@ -150,9 +150,7 @@ def eventos_comenzar_quit_etc(self):
             if (event.key == pygame.K_RETURN and self.estado_juego["menu_presentacion"]) or (event.key == pygame.K_RETURN and self.estado_juego["game_over"]):
                 pygame.mixer.music.stop()
                 self.resetear_estados_juego()
-                self.estado_juego["preparado"] = True
                 self.estado_juego["en_juego"] = True
-                self.ultimo_update["preparado"] = pygame.time.get_ticks()
 
                 if self.vidas <= 0:
                     self.vidas = 3

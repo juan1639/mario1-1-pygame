@@ -3,6 +3,8 @@ from settings import *
 from funciones import *
 from tilemaps import TILE_MAP
 from marioniveles import NIVEL_1_1
+from mario import Mario
+
 
 
 # ====================================================================================
@@ -35,7 +37,7 @@ class Game:
         self.estado_juego = {
             "menu_presentacion": True,
             "preparado": False,
-            "en_juego": False,
+            "en_juego": True,
             "game_over": False,
             "nivel_superado": False
         }
@@ -107,7 +109,7 @@ class Game:
         """Preparar un nuevo nivel o juego."""
         self.vaciar_listas()
         #self.crear_pantalla_nivel()
-        #self.instanciar_objetos()
+        self.instanciar_objetos()
         #self.instanciar_textos_iniciales()
         self.sonidos.reproducir("musica-principal")
     
@@ -118,10 +120,10 @@ class Game:
     def obtener_grafico(self, nombrePng):
         """Devolver una imagen y un rectangulo."""
         img = pygame.image.load(f"{self.CO.RUTA_ASSETS_IMG}{nombrePng}").convert()
-        escalaX = self.CO.TILE_X
-        escalaY = self.CO.TILE_Y
+        escalaX = img.get_width() * self.CO.ESCALA
+        escalaY = img.get_height() * self.CO.ESCALA
         image = pygame.transform.scale(img, (escalaX, escalaY))
-        image.set_colorkey((255, 255, 255))
+        #image.set_colorkey((255, 255, 255))
         rect = image.get_rect()
         
         return (image, rect)
@@ -186,6 +188,12 @@ class Game:
         if self.vidas < 0:
             self.ir_gameover()
             return
+        
+        self.mario = Mario(self, 5, 6)
+        self.listas_sprites["all_sprites"].add(self.mario)
+        self.listas_sprites["mario"].add(self.mario)
+
+    
     
 
 
@@ -252,6 +260,8 @@ class Game:
         if keys[pygame.K_LEFT] and self.scroll_x > 0:
             self.scroll_x -= 5
         
+        self.listas_sprites["all_sprites"].update()
+        
         pygame.display.flip()
         self.reloj.tick(self.CO.FPS)
     
@@ -263,6 +273,8 @@ class Game:
         self.pantalla.fill(self.COL.AZUL_CELESTE_FONDO)
 
         self.draw_tilemap()
+        self.listas_sprites["all_sprites"].draw(self.pantalla)
+
         #draw_listas_sprites(self)
     
 
