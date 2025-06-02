@@ -35,16 +35,14 @@ class Mario(pygame.sprite.Sprite):
         self.rect.x = x * self.TX
         self.rect.y = y * self.TY
 
-        # Dirección y físicas
-        self.direccion_actual = 0
+        # Dirección, aceleracion, limites y físicas:
+        self.acc = 0    # Aceleracion (vel) del personaje
         self.flip = False
-        self.VEL_MAX = 15.5
-        self.ACELERACION = 0.3
-        self.DECELERACION = 0.1
+        self.VEL_MAX = 7.5
+        self.ACELERACION = 0.1
+        self.DECELERACION = 0.04
 
-        self.acc = 0
-        self.vel = 0
-
+        # Velocidad de las animaciones:
         self.ultimo_update = pygame.time.get_ticks()
         self.VEL_FRAMES_ANIMA = 90
     
@@ -61,6 +59,8 @@ class Mario(pygame.sprite.Sprite):
         self.mover()
         self.actualizar_animacion()
         self.manejar_colisiones()
+    
+    
 
     
     
@@ -70,40 +70,47 @@ class Mario(pygame.sprite.Sprite):
         teclas = pygame.key.get_pressed()
 
         if teclas[pygame.K_LEFT]:
-            self.acc += -self.ACELERACION
+            self.gestionar_aceleracion(self.flip)
             self.flip = True
         
         elif teclas[pygame.K_RIGHT]:
-            self.acc += self.ACELERACION
+            self.gestionar_aceleracion(self.flip)
             self.flip = False
         
         else:
-            if self.acc > 0 and not self.flip:
+            if self.acc > 0:
                 self.acc -= self.DECELERACION
-            elif self.acc < 0 and self.flip:
-                self.acc += self.DECELERACION
+                self.acc = 0 if self.acc < 0 else self.acc
             else:
-                self.acc = 0
+                self.acc += self.DECELERACION
+                self.acc = 0 if self.acc > 0 else self.acc
         
-        # Aplicar fricción
-        self.vel += self.acc
-
-        # Limitar velocidad máxima
-        if self.vel > self.VEL_MAX:
-            self.vel = self.VEL_MAX
-        
-        elif self.vel < -self.VEL_MAX:
-            self.vel = -self.VEL_MAX
-        
-        # Mover scroll tb:
-        self.game.scroll_x += self.vel
+        # Mover scroll (mario no se mueve realmente):
+        self.game.scroll_x += self.acc
     
 
+
+
+
+
+
+
+    def gestionar_aceleracion(self, flip):
+        if flip:
+            self.acc -= self.ACELERACION
+            self.acc = -self.VEL_MAX if self.acc < -self.VEL_MAX else self.acc
+        else:
+            self.acc += self.ACELERACION
+            self.acc = self.VEL_MAX if self.acc > self.VEL_MAX else self.acc
+    
+
     
     
-    
-    
-    
+
+
+
+
+
     def actualizar_animacion(self):
         ahora = pygame.time.get_ticks()
 
@@ -114,8 +121,16 @@ class Mario(pygame.sprite.Sprite):
             if self.anim_index >= self.rango_animacion[1]:
                 self.anim_index = self.rango_animacion[0]
             
-            self.image = self.lista_imagenes[self.anim_index]
-            self.image = pygame.transform.flip(self.image, self.flip, False)
+            # Si va muy lento (cerca de 0), entonces 'animacion parado'[0]:
+            if -0.01 <= self.acc <= 0.01:
+                self.image = self.lista_imagenes[0]
+                self.image = pygame.transform.flip(self.image, self.flip, False)
+            else:
+                # Si no, cambia la secuencia de animacion de forma normal:
+                self.image = self.lista_imagenes[self.anim_index]
+                self.image = pygame.transform.flip(self.image, self.flip, False)
+    
+
     
 
 
