@@ -1,7 +1,6 @@
 import pygame
 from settings import *
 from funciones import *
-from tilemaps import TILE_MAP
 from marioniveles import NIVEL_1_1
 from mario import Mario
 
@@ -123,7 +122,7 @@ class Game:
         escalaX = img.get_width() * self.CO.ESCALA
         escalaY = img.get_height() * self.CO.ESCALA
         image = pygame.transform.scale(img, (escalaX, escalaY))
-        #image.set_colorkey((255, 255, 255))
+        image.set_colorkey((255, 255, 255))
         rect = image.get_rect()
         
         return (image, rect)
@@ -155,7 +154,7 @@ class Game:
     
     def draw_tilemap(self):
         tiles_en_pantalla_x = self.pantalla.get_width() // self.CO.TILE_X
-        start_tile_x = self.scroll_x // self.CO.TILE_X
+        start_tile_x = round(self.scroll_x // self.CO.TILE_X)
 
         for y in range(self.CO.ESCENARIO_FILAS):
             for x in range(tiles_en_pantalla_x + 1):  # +1 para cubrir borde derecho
@@ -189,7 +188,7 @@ class Game:
             self.ir_gameover()
             return
         
-        self.mario = Mario(self, 5, 12)
+        self.mario = Mario(self, self.CO.MARIO_INI_POS[0] - 1, self.CO.MARIO_INI_POS[1])
         self.listas_sprites["all_sprites"].add(self.mario)
         self.listas_sprites["mario"].add(self.mario)
 
@@ -254,11 +253,14 @@ class Game:
         pygame.display.set_caption(str(int(self.reloj.get_fps())))
 
         #updates_segun_estado(self)
-        keys = pygame.key.get_pressed()
+
+        """ keys = pygame.key.get_pressed()
+
         if keys[pygame.K_RIGHT]:
             self.scroll_x += 5
+        
         if keys[pygame.K_LEFT] and self.scroll_x > 0:
-            self.scroll_x -= 5
+            self.scroll_x -= 5 """
         
         self.listas_sprites["all_sprites"].update()
         

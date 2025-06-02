@@ -83,7 +83,7 @@ class Constantes:
     TILE_X, TILE_Y = 16 * ESCALA, 16 * ESCALA   # Tamano de los Tiles (x Escala)
     FILAS, COLUMNAS = 15, 24                    # Filas x Columnas (15, 16)
     ESCENARIO_FILAS, ESCENARIO_COLUMNAS = 15, 212 # Total Pantalla (212 ancho x 15 alto)
-    MARIO_INI_POS = (5, 9)
+    MARIO_INI_POS = (COLUMNAS // 2, 12)
     NIVEL_INICIAL = int(CONFIG["general"]["nivel_inicial"])
     VIDAS_INICIALES = int(CONFIG["general"]["vidas_iniciales"])
     RESOLUCION = (TILE_X * COLUMNAS, TILE_Y * FILAS) # Calculo de la pantalla 256x240px(* escala))
@@ -112,16 +112,16 @@ class Sonidos:
         """Cargar todos los sonidos en un diccionario."""
 
         return {
-            "bricks_fall": self.cargar_sonido(f"{self.ruta_audio}bricks-fall.mp3"),
-            "fireworks": self.cargar_sonido(f"{self.ruta_audio}fireworks.mp3"),
-            "gameover": self.cargar_sonido(f"{self.ruta_audio}gameover_mario.mp3"),
-            "salto": self.cargar_sonido(f"{self.ruta_audio}jumpbros.ogg"),
-            "musica-secundaria-tuberias": self.cargar_sonido(f"{self.ruta_audio}mario-tuberias.mp3"),
-            "musica-principal": self.cargar_sonido(f"{self.ruta_audio}musica-mario-bros.mp3"),
-            "oh_no": self.cargar_sonido(f"{self.ruta_audio}oh-no.mp3"),
-            "ough": self.cargar_sonido(f"{self.ruta_audio}ough.mp3"),
-            "moneda": self.cargar_sonido(f"{self.ruta_audio}p-ping.mp3"),
-            "wall": self.cargar_sonido(f"{self.ruta_audio}wall.wav")
+            "bricks_fall": self.cargar_sonido(f"{self.ruta_audio}bricks-fall.mp3", 0.8),
+            "fireworks": self.cargar_sonido(f"{self.ruta_audio}fireworks.mp3", 0.9),
+            "gameover": self.cargar_sonido(f"{self.ruta_audio}gameover_mario.mp3", 0.7),
+            "salto": self.cargar_sonido(f"{self.ruta_audio}jumpbros.ogg", 0.5),
+            "musica-secundaria-tuberias": self.cargar_sonido(f"{self.ruta_audio}mario-tuberias.mp3", 0.7),
+            "musica-principal": self.cargar_sonido(f"{self.ruta_audio}musica-mario-bros.mp3", 0.8),
+            "oh_no": self.cargar_sonido(f"{self.ruta_audio}oh-no.mp3", 0.8),
+            "ough": self.cargar_sonido(f"{self.ruta_audio}ough.mp3", 0.9),
+            "moneda": self.cargar_sonido(f"{self.ruta_audio}p-ping.mp3", 0.7),
+            "wall": self.cargar_sonido(f"{self.ruta_audio}wall.wav", 0.8)
         }
 
     """ def cargar_sonido(self, ruta, volumen=1.0):
